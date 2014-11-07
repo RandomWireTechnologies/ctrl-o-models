@@ -19,16 +19,16 @@ circle_kerf = 0.3;
 back_ring_height = 10;
 back_ring_width = 10;
 back_top_notch_width = 15;
-back_top_notch_height = 6;
+back_top_notch_height = 4;
 back_bottom_notch_width = 12;
 back_bottom_notch_height = 10;
 screw_hole_diameter = 3;
 screw_offset = 5;
 base_hole_diameter = 20;
-base_kerf = 1;
+base_kerf = 1.1;
 mount_hole_diameter = 4.5;
-nut_hole_length = 7;
-nut_hole_width = 3;
+nut_hole_length = 6.6;
+nut_hole_width = 2.6;
 buzzer_height = 3;
 buzzer_diameter = 13.5;
 buzzer_x_offset = 25;
@@ -41,7 +41,7 @@ buzzer_z_offset = 11;
 
 translate([0,0,cover_height+back_ring_height]) rotate(a=180,v=[0,1,0]) 
 	base_plate(cover_diameter);
-!rfid_cover(cover_diameter,cover_height);
+rfid_cover(cover_diameter,cover_height);
 //rotate(a=180,v=[1,0,0]) 
 rfid_window(window_diameter-circle_kerf,window_depth,window_lip_width-(circle_kerf/2),window_lip_depth);
 
@@ -108,7 +108,7 @@ module rfid_cover(diameter,height) {
 module base_plate(diameter) {
    inner_diameter = (diameter-(2*wall_thickness)-base_kerf);
 	inner_back_diameter = (diameter-(back_ring_width*2))-base_kerf;
-	nut_hole_offset = screw_offset-4;
+	nut_hole_offset = screw_offset-3.8;
 	difference() {
 		cylinder(d=inner_back_diameter,h=back_ring_height);
 		cylinder(d=base_hole_diameter,h=back_ring_height);
