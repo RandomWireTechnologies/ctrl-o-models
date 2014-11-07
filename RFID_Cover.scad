@@ -29,15 +29,19 @@ base_kerf = 1;
 mount_hole_diameter = 4.5;
 nut_hole_length = 7;
 nut_hole_width = 3;
-
+buzzer_height = 3;
+buzzer_diameter = 13.5;
+buzzer_x_offset = 25;
+buzzer_y_offset = 0;
+buzzer_z_offset = 11;
 
 ///////////////////
 // renders
 ///////////////////
 
 translate([0,0,cover_height+back_ring_height]) rotate(a=180,v=[0,1,0]) 
-	!base_plate(cover_diameter);
-rfid_cover(cover_diameter,cover_height);
+	base_plate(cover_diameter);
+!rfid_cover(cover_diameter,cover_height);
 //rotate(a=180,v=[1,0,0]) 
 rfid_window(window_diameter-circle_kerf,window_depth,window_lip_width-(circle_kerf/2),window_lip_depth);
 
@@ -67,6 +71,10 @@ module rfid_cover(diameter,height) {
 			cube([board_width,board_height,board_thickness]);
 		translate([0,((cover_diameter/4)+(window_diameter/4)),0])
 			cylinder(d=(led_diameter+circle_kerf),h=(front_height+board_thickness+.1));
+		// Remove buzzer cavity
+		translate([buzzer_x_offset,buzzer_y_offset,buzzer_z_offset])
+			rotate(a=90,v=[0,1,0])
+				cylinder(d=buzzer_diameter,h=buzzer_height);
 	}
 	difference() {
 		// More base meat for transition
