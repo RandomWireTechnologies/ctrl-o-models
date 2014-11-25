@@ -1,19 +1,19 @@
 //////////////////
 //Parameters
 //////////////////
-$fn = 100;
+$fn = 180;
 window_depth = 1.6;
 window_diameter = 25;
 window_lip_depth = 1;
 window_lip_width = 3;
 wall_thickness = 4;
-cover_diameter = 78;
+cover_diameter = 70;
 cover_height = 10;
 board_width = 41;
 board_height = 43.4;
 board_thickness = 4;
-board_x_shift = 2;
-board_y_shift = 4.5;
+board_x_shift = 0;
+board_y_shift = 0;
 led_diameter = 5.0;
 circle_kerf = 0.3;
 back_ring_height = 10;
@@ -27,8 +27,8 @@ screw_offset = 5;
 base_hole_diameter = 20;
 base_kerf = 1.1;
 mount_hole_diameter = 4.5;
-nut_hole_length = 6.6;
-nut_hole_width = 2.6;
+nut_hole_length = 6.7;
+nut_hole_width = 2.;
 buzzer_height = 3;
 buzzer_diameter = 13.5;
 buzzer_x_offset = 25;
@@ -39,8 +39,8 @@ buzzer_z_offset = 11;
 // renders
 ///////////////////
 
-//translate([0,0,cover_height+back_ring_height]) rotate(a=180,v=[0,1,0]) 
-//	base_plate(cover_diameter);
+translate([0,0,cover_height+back_ring_height]) rotate(a=180,v=[0,1,0]) 
+	base_plate(cover_diameter);
 rfid_cover(cover_diameter,cover_height);
 //rotate(a=180,v=[1,0,0]) 
 //rfid_window(window_diameter-circle_kerf,window_depth,window_lip_width-(circle_kerf/2),window_lip_depth);
@@ -59,6 +59,7 @@ module rfid_cover(diameter,height) {
    inner_height = height-(front_height+board_thickness);
    inner_diameter = (diameter-(2*wall_thickness));
 	inner_back_diameter = (diameter-(back_ring_width*2));
+
    difference() {
 		// Main body
 		cylinder(d=diameter,h=height);
@@ -75,12 +76,12 @@ module rfid_cover(diameter,height) {
 		translate([-(board_x_shift+board_width/2),-(board_y_shift+board_height/2),front_height])
 			cube([board_width,board_height,board_thickness]);
 		// Create a hole for LED
-		translate([0,((cover_diameter/4)+(window_diameter/4)),0])
+		translate([0,((inner_diameter/4)+(board_height/4)),0])
 			cylinder(d=(led_diameter+circle_kerf),h=(front_height+board_thickness+.1));
 		// Remove buzzer cavity
-		translate([buzzer_x_offset,buzzer_y_offset,buzzer_z_offset])
-			rotate(a=90,v=[0,1,0])
-				cylinder(d=buzzer_diameter,h=buzzer_height);
+		//translate([buzzer_x_offset,buzzer_y_offset,buzzer_z_offset])
+		//	rotate(a=90,v=[0,1,0])
+		//		cylinder(d=buzzer_diameter,h=buzzer_height);
 	}
 	difference() {
 		// More base meat for transition
