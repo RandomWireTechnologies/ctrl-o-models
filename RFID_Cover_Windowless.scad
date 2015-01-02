@@ -25,7 +25,7 @@ back_bottom_notch_height = 10;
 screw_hole_diameter = 3;
 screw_offset = 5;
 base_hole_diameter = 20;
-base_kerf = 1.1;
+base_kerf = 2.0;
 mount_hole_diameter = 4.5;
 nut_hole_length = 6.7;
 nut_hole_width = 2.;
@@ -115,13 +115,14 @@ module rfid_cover(diameter,height) {
 module base_plate(diameter) {
    inner_diameter = (diameter-(2*wall_thickness)-base_kerf);
 	inner_back_diameter = (diameter-(back_ring_width*2))-base_kerf;
+	inner_base_diameter = inner_back_diameter-(2*wall_thickness);
 	nut_hole_offset = screw_offset-3.8;
 	difference() {
 		cylinder(d=inner_back_diameter,h=back_ring_height);
 		cylinder(d=base_hole_diameter,h=back_ring_height);
-		translate ([0,0,wall_thickness]) cylinder(d=inner_back_diameter-(2*wall_thickness),h=back_ring_height);
+		translate ([0,0,wall_thickness]) cylinder(d=inner_base_diameter,h=back_ring_height);
 		for(r=[0:120:360]) {
-			rotate(a=r,v=[0,0,1]) translate ([0,(inner_back_diameter/4)+(base_hole_diameter/4),0]) cylinder(h=back_ring_height,d=mount_hole_diameter);
+			rotate(a=r,v=[0,0,1]) translate ([0,(inner_base_diameter/4)+(base_hole_diameter/4),0]) cylinder(h=back_ring_height,d=mount_hole_diameter);
 		}
 	}
 	//  Top Notch (built of intersection of inner wall cylinder and cube for notch)
